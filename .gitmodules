@@ -1,0 +1,3 @@
+[submodule "Reskit"]
+	path = Reskit
+	url = git://github.com/RestKit/RestKit.git

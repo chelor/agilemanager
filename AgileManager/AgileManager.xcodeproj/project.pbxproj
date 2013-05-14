@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9C598490173EEF0F0012245C /* AGMTableContent.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C59848F173EEF0F0012245C /* AGMTableContent.m */; };
 		9CBBD313173D62A600B5AA3B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CBBD312173D62A600B5AA3B /* UIKit.framework */; };
 		9CBBD315173D62A600B5AA3B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CBBD314173D62A600B5AA3B /* Foundation.framework */; };
 		9CBBD317173D62A600B5AA3B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CBBD316173D62A600B5AA3B /* CoreGraphics.framework */; };
@@ -33,6 +34,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9C59848E173EEF0F0012245C /* AGMTableContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AGMTableContent.h; sourceTree = "<group>"; };
+		9C59848F173EEF0F0012245C /* AGMTableContent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AGMTableContent.m; sourceTree = "<group>"; };
 		9CBBD30F173D62A600B5AA3B /* AgileManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AgileManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CBBD312173D62A600B5AA3B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		9CBBD314173D62A600B5AA3B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -159,6 +162,8 @@
 				9CBBD352173D818F00B5AA3B /* AGMTableViewCellDelegate.h */,
 				9CBBD353173D845F00B5AA3B /* AGMStrikethroughLabel.h */,
 				9CBBD354173D845F00B5AA3B /* AGMStrikethroughLabel.m */,
+				9C59848E173EEF0F0012245C /* AGMTableContent.h */,
+				9C59848F173EEF0F0012245C /* AGMTableContent.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -173,6 +178,7 @@
 				9CBBD30B173D62A600B5AA3B /* Sources */,
 				9CBBD30C173D62A600B5AA3B /* Frameworks */,
 				9CBBD30D173D62A600B5AA3B /* Resources */,
+				9C59848D173DFD430012245C /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -232,6 +238,22 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		9C59848D173DFD430012245C /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "KEYWORDS=\"TODO:|FIXME:|\\?\\?\\?:|\\!\\!\\!:\"\nfind \"${SRCROOT}\" \\( -name \"*.h\" -or -name \"*.m\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($KEYWORDS).*\\$\" | perl -p -e \"s/($KEYWORDS)/ warning: \\$1/\"";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		9CBBD30B173D62A600B5AA3B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -244,6 +266,7 @@
 				9CBBD34C173D63D400B5AA3B /* AGMToDoItem.m in Sources */,
 				9CBBD34F173D79D700B5AA3B /* AGMTableViewCell.m in Sources */,
 				9CBBD355173D845F00B5AA3B /* AGMStrikethroughLabel.m in Sources */,
+				9C598490173EEF0F0012245C /* AGMTableContent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

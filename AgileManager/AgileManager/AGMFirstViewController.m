@@ -9,44 +9,50 @@
 #import "AGMFirstViewController.h"
 #import "AGMToDoItem.h"
 #import "AGMTableViewCell.h"
+#import "AGMTableContent.h"
 
 @implementation AGMFirstViewController{
-    NSMutableArray *_toDoItems;
+     // Declaro la variable de instancia que contendra los items
+     NSMutableArray *_notStartedItemsx;
+     AGMTableContent *tableContent;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
+     // No se bien que es, pero es el "super" de este constructor
+     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+     
+     //Aqui dentro va todo lo que "funciona"
+     if (self) {
          
+          //Defino el nombre de la solapa y su imagen tmb
          self.title = NSLocalizedString(@"Not Started", @"First");
          self.tabBarItem.image = [UIImage imageNamed:@"first"];
          
-        _toDoItems = [[NSMutableArray alloc] init];
-        [_toDoItems addObject:[AGMToDoItem toDoItemWithText:@"Feed the cat"]];
-        [_toDoItems addObject:[AGMToDoItem toDoItemWithText:@"Buy eggs"]];
-        [_toDoItems addObject:[AGMToDoItem toDoItemWithText:@"Pack bags for WWDC"]];
-        [_toDoItems addObject:[AGMToDoItem toDoItemWithText:@"Rule the web"]];
-        [_toDoItems addObject:[AGMToDoItem toDoItemWithText:@"Buy a new iPhone"]];
-        [_toDoItems addObject:[AGMToDoItem toDoItemWithText:@"Find missing socks"]];
-        [_toDoItems addObject:[AGMToDoItem toDoItemWithText:@"Write a new tutorial"]];
-        [_toDoItems addObject:[AGMToDoItem toDoItemWithText:@"Master Objective-C"]];
-        [_toDoItems addObject:[AGMToDoItem toDoItemWithText:@"Remember your wedding anniversary!"]];
-        [_toDoItems addObject:[AGMToDoItem toDoItemWithText:@"Drink less beer"]];
-        [_toDoItems addObject:[AGMToDoItem toDoItemWithText:@"Learn to draw"]];
-        [_toDoItems addObject:[AGMToDoItem toDoItemWithText:@"Take the car to the garage"]];
-        [_toDoItems addObject:[AGMToDoItem toDoItemWithText:@"Sell things on eBay"]];
-        [_toDoItems addObject:[AGMToDoItem toDoItemWithText:@"Learn to juggle"]];
-        [_toDoItems addObject:[AGMToDoItem toDoItemWithText:@"Give up"]];
+          //Populo el array de items
+          //TODO: esto deberia reemplazarlo con la conexion al JSON2
+          self->tableContent = [AGMTableContent sharedMySingleton];
+          //self->_notStartedItems = [tableContent getNotStarted];
+
     }
     return self;
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+     [self.tableView reloadData];
 }
 							
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
-    self.tableView.dataSource = self;
-    [self.tableView registerClass:[AGMTableViewCell class] forCellReuseIdentifier:@"cell"];
+     [super viewDidLoad];
+     //Digo que el origen de mis datos esta dentro de mi clase....
+     
+     self.tableView.dataSource = self;
+     //Digo que clase va a ser la celda
+     //TODO: Como funciona el "identifier"
+     //self->_notStartedItems = [tableContent getNotStarted];
+     
+     [self.tableView registerClass:[AGMTableViewCell class] forCellReuseIdentifier:@"cell"];
      
      self.tableView.delegate = self;
      
@@ -61,16 +67,19 @@
 }
 
 -(UIColor*)colorForIndex:(NSInteger) index {
-     NSUInteger itemCount = _toDoItems.count - 1;
+     
+     NSUInteger itemCount = [tableContent getNotStarted].count - 1;
      float val = ((float)index / (float)itemCount) * 0.6;
      return [UIColor colorWithRed: 1.0 green:val blue: 0.0 alpha:1.0];
+     
 }
 
 -(void)toDoItemDeleted:(id)todoItem {
      float delay = 0.0;
      
      // remove the model object
-     [_toDoItems removeObject:todoItem];
+     [[tableContent getNotStarted] removeObject:todoItem];
+     [[tableContent getBackloglist] addObject:todoItem];
      
      // find the visible cells
      NSArray* visibleCells = [self.tableView visibleCells];
@@ -103,13 +112,51 @@
      }
 }
 
+-(void) toDoItemReassigned:(id)todoItem{
+     float delay = 0.0;
+     
+     /// remove the model object
+     [[tableContent getNotStarted] removeObject:todoItem];
+     
+     // find the visible cells
+     NSArray* visibleCells = [self.tableView visibleCells];
+     
+     UIView* lastView = [visibleCells lastObject];
+     bool startAnimating = false;
+     
+     // iterate over all of the cells
+     for(AGMTableViewCell* cell in visibleCells) {
+          if (startAnimating) {
+               [UIView animateWithDuration:0.3
+                                     delay:delay
+                                   options:UIViewAnimationOptionCurveEaseInOut
+                                animations:^{
+                                     cell.frame = CGRectOffset(cell.frame, 0.0f, -cell.frame.size.height);
+                                }
+                                completion:^(BOOL finished){
+                                     if (cell == lastView) {
+                                          [self.tableView reloadData];
+                                     }
+                                }];
+               delay+=0.03;
+          }
+          
+          // if you have reached the item that was deleted, start animating
+          if (cell.todoItem == todoItem) {
+               startAnimating = true;
+               cell.hidden = YES;
+          }
+     }
+
+}
+
 //*********************************************************************************
 //*********************************************************************************
 #pragma mark - UITableViewDataSource protocol methods
 //*********************************************************************************
 //*********************************************************************************
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return _toDoItems.count;
+    return [tableContent getNotStarted].count;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -118,7 +165,7 @@
     AGMTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ident forIndexPath:indexPath];
     // find the to-do item for this index
     int index = [indexPath row];
-    AGMToDoItem *item = _toDoItems[index];
+    AGMToDoItem *item = [tableContent getNotStarted][index];
     // set the text
     //cell.textLabel.text = item.text;
      
@@ -138,7 +185,7 @@
 }
 
 -(void)tableView:(UITableView *)tableView willDisplayCell:(AGMTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-     cell.backgroundColor = [self colorForIndex:indexPath.row];
+     cell.backgroundColor = [UIColor grayColor];
 }
 
 @end

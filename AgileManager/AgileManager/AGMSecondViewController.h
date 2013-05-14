@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AGMTableViewCellDelegate.h"
 
-@interface AGMSecondViewController : UIViewController
+@interface AGMSecondViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, AGMTableViewCellDelegate>
+
+@property(weak,nonatomic) IBOutlet UITableView *tableView;
 
 @end

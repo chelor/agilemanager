@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "AGMTableViewCellDelegate.h"
 #import "AGMToDoItem.h"
+#import "AGMStrikethroughLabel.h"
 
 @interface AGMTableViewCell : UITableViewCell
 
@@ -17,5 +18,8 @@
 
 // The object that acts as delegate for this cell.
 @property (nonatomic, assign) id<AGMTableViewCellDelegate> delegate;
+
+// the label used to render the to-do text
+@property (nonatomic, strong, readonly) AGMStrikethroughLabel* label;
 
 @end

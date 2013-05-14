@@ -14,4 +14,6 @@
 // indicates that the given item has been deleted
 -(void) toDoItemDeleted:(AGMToDoItem*)todoItem;
 
+-(void) toDoItemReassigned:(AGMToDoItem*)todoItem;
+
 @end

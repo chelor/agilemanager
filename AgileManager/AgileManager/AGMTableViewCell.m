@@ -13,32 +13,48 @@
 {
      CAGradientLayer* _gradientLayer;
      CGPoint _originalCenter;
-     BOOL _deleteOnDragRelease;
-     AGMStrikethroughLabel *_label;
      CALayer *_itemCompleteLayer;
      
+     BOOL _deleteOnDragRelease;
      BOOL _markCompleteOnDragRelease;
+     BOOL _markReassingment;
      
-     UILabel *_tickLabel;
-     UILabel *_crossLabel;
+     UILabel *_startLabel;
+     UILabel *_toBacklogLabel;
+     UILabel *_reassignLabel;
+     
+     NSString *toStart;
+     NSString *toBacklog;
+     NSString *reassign;
+     
 }
 
 const float LABEL_LEFT_MARGIN = 15.0f;
 const float UI_CUES_MARGIN = 10.0f;
-const float UI_CUES_WIDTH = 50.0f;
+const float UI_CUES_WIDTH = 350.0f;
 
 -(id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+         
          // add a tick and cross
-         _tickLabel = [self createCueLabel];
-         _tickLabel.text = @"\u2713";
-         _tickLabel.textAlignment = NSTextAlignmentRight;
-         [self addSubview:_tickLabel];
-         _crossLabel = [self createCueLabel];
-         _crossLabel.text = @"\u2717";
-         _crossLabel.textAlignment = NSTextAlignmentLeft;
-         [self addSubview:_crossLabel];
+         _startLabel = [self createCueLabel];
+         toStart = @"Start \u2192";
+         _startLabel.text = toStart;
+         _startLabel.textAlignment = NSTextAlignmentRight;
+         _startLabel.hidden = YES;
+         [self addSubview:_startLabel];
+         
+         _toBacklogLabel = [self createCueLabel];
+         _toBacklogLabel.text = @"\u2190 to Backlog";
+         _toBacklogLabel.textAlignment = NSTextAlignmentLeft;
+         [self addSubview:_toBacklogLabel];
+         
+         _reassignLabel = [self createCueLabel];
+         reassign = @"Reassign \u265F";
+         _reassignLabel.text = reassign;
+         _reassignLabel.textAlignment = NSTextAlignmentRight;
+         [self addSubview:_reassignLabel];
          
          // add a layer that overlays the cell adding a subtle gradient effect
          // create a label that renders the to-do item text
@@ -47,8 +63,9 @@ const float UI_CUES_WIDTH = 50.0f;
          _label.font = [UIFont boldSystemFontOfSize:16];
          _label.backgroundColor = [UIColor clearColor];
          [self addSubview:_label];
+         
          // remove the default blue highlight for selected cells
-         self.selectionStyle = UITableViewCellSelectionStyleNone;
+         //self.selectionStyle = UITableViewCellSelectionStyleNone;
         _gradientLayer = [CAGradientLayer layer];
         _gradientLayer.frame = self.bounds;
         _gradientLayer.colors = @[(id)[[UIColor colorWithWhite:1.0f alpha:0.2f] CGColor],
@@ -80,10 +97,13 @@ const float UI_CUES_WIDTH = 50.0f;
      _itemCompleteLayer.frame = self.bounds;
      _label.frame = CGRectMake(LABEL_LEFT_MARGIN, 0,
                                self.bounds.size.width - LABEL_LEFT_MARGIN,self.bounds.size.height);
-     _tickLabel.frame = CGRectMake(-UI_CUES_WIDTH - UI_CUES_MARGIN, 0,
+     _startLabel.frame = CGRectMake(-UI_CUES_WIDTH - UI_CUES_MARGIN, 0,
                                    UI_CUES_WIDTH, self.bounds.size.height);
-     _crossLabel.frame = CGRectMake(self.bounds.size.width + UI_CUES_MARGIN, 0,
+     _toBacklogLabel.frame = CGRectMake(self.bounds.size.width + UI_CUES_MARGIN, 0,
                                     UI_CUES_WIDTH, self.bounds.size.height);
+     
+     _reassignLabel.frame = CGRectMake(-UI_CUES_WIDTH - UI_CUES_MARGIN, 0,
+                                       UI_CUES_WIDTH, self.bounds.size.height);
 }
 
 -(void)setTodoItem:(AGMToDoItem *)todoItem {
@@ -130,19 +150,36 @@ const float UI_CUES_WIDTH = 50.0f;
           CGPoint translation = [recognizer translationInView:self];
           self.center = CGPointMake(_originalCenter.x + translation.x, _originalCenter.y);
           // determine whether the item has been dragged far enough to initiate a delete / complete
-          _deleteOnDragRelease = self.frame.origin.x < -self.frame.size.width / 2;
-          _markCompleteOnDragRelease = self.frame.origin.x > self.frame.size.width / 2;
+          
+          _deleteOnDragRelease = self.frame.origin.x < -self.frame.size.width * 0.75;
+          
+          NSLog(@"Mark Completed : %d",_markCompleteOnDragRelease);
+          NSLog(@"Mark Reassignment : %d",_markReassingment);
+          
+          _markCompleteOnDragRelease = self.frame.origin.x > self.frame.size.width * 0.75;
+          _markReassingment = self.frame.origin.x > self.frame.size.width * 0.45;
+          
+          if (_markCompleteOnDragRelease) {
+               _markReassingment = NO;
+          }
+          
           
           // fade the contextual cues
           float cueAlpha = fabsf(self.frame.origin.x) / (self.frame.size.width / 2);
-          _tickLabel.alpha = cueAlpha;
-          _crossLabel.alpha = cueAlpha;
+          //_startLabel.alpha = cueAlpha;
+          _toBacklogLabel.alpha = cueAlpha;
           
           // indicate when the item have been pulled far enough to invoke the given action
-          _tickLabel.textColor = _markCompleteOnDragRelease ?
+          _startLabel.textColor = _markCompleteOnDragRelease ?
           [UIColor greenColor] : [UIColor whiteColor];
-          _crossLabel.textColor = _deleteOnDragRelease ?
+          _toBacklogLabel.textColor = _deleteOnDragRelease ?
           [UIColor redColor] : [UIColor whiteColor];
+          _reassignLabel.textColor = _markReassingment ?
+          [UIColor yellowColor] : [UIColor whiteColor];
+          
+          _startLabel.hidden = !_markCompleteOnDragRelease;
+          _reassignLabel.hidden = !_markReassingment;
+          
           
      }
      
@@ -157,6 +194,11 @@ const float UI_CUES_WIDTH = 50.0f;
                self.todoItem.completed = YES;
                _itemCompleteLayer.hidden = NO;
                _label.strikethrough = YES;
+          }
+          
+          if (_markReassingment){
+               NSLog(@"REASSIGN PLEASE!");
+               [self.delegate toDoItemReassigned:self.todoItem];
           }
           self.center = _originalCenter;
      }
