@@ -8,13 +8,16 @@
 
 #import "AGMSecondViewController.h"
 #import "AGMTableContent.h"
-#import "AGMTableViewCell.h"
+//#import "AGMTableViewCell.h"
+#import "AGMItemCell.h"
 
 @implementation AGMSecondViewController
 {
      // Declaro la variable de instancia que contendra los items
      //NSMutableArray *_backlogItems;
      AGMTableContent *tableContent;
+     
+     NSString *ident;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -26,6 +29,7 @@
           
           tableContent =[AGMTableContent sharedMySingleton];
           //self->_backlogItems = [tableContent getBackloglist];
+               self->ident = @"cell2";
           
      }
      return self;
@@ -46,7 +50,7 @@
      
      //self->_backlogItems = [tableContent getBackloglist];
      
-     [self.tableView registerClass:[AGMTableViewCell class] forCellReuseIdentifier:@"cell"];
+     [self.tableView registerClass:[AGMItemCell class] forCellReuseIdentifier:ident];
      
      self.tableView.delegate = self;
      
@@ -73,7 +77,7 @@
      bool startAnimating = false;
      
      // iterate over all of the cells
-     for(AGMTableViewCell* cell in visibleCells) {
+     for(AGMItemCell* cell in visibleCells) {
           if (startAnimating) {
                [UIView animateWithDuration:0.3
                                      delay:delay
@@ -110,7 +114,7 @@
      bool startAnimating = false;
      
      // iterate over all of the cells
-     for(AGMTableViewCell* cell in visibleCells) {
+     for(AGMItemCell* cell in visibleCells) {
           if (startAnimating) {
                [UIView animateWithDuration:0.3
                                      delay:delay
@@ -145,12 +149,12 @@
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-     NSString *ident = @"cell";
+
      // re-use or create a cell
-     AGMTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ident forIndexPath:indexPath];
+     AGMItemCell *cell = [tableView dequeueReusableCellWithIdentifier:ident forIndexPath:indexPath];
      // find the to-do item for this index
      int index = [indexPath row];
-     AGMToDoItem *item = [tableContent getBackloglist][index];
+     AGMActionItemModel*item = [tableContent getBackloglist][index];
      // set the text
      //cell.textLabel.text = item.text;
      
@@ -169,7 +173,7 @@
      return 50.0f;
 }
 
--(void)tableView:(UITableView *)tableView willDisplayCell:(AGMTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+-(void)tableView:(UITableView *)tableView willDisplayCell:(AGMItemCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
      cell.backgroundColor = [UIColor grayColor];
 }
 

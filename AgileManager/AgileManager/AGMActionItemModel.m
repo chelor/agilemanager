@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 Marcelo Russo. All rights reserved.
 //
 
-#import "AGMToDoItem.h"
+#import "AGMActionItemModel.h"
 
-@implementation AGMToDoItem
+@implementation AGMActionItemModel
 
 -(id)initWithText:(NSString*)text {
     if (self = [super init]) {
@@ -18,7 +18,7 @@
 }
 
 +(id)toDoItemWithText:(NSString *)text {
-    return [[AGMToDoItem alloc] initWithText:text];
+    return [[AGMActionItemModel alloc] initWithText:text];
 }
 
 

@@ -7,14 +7,17 @@
 //
 
 #import "AGMFirstViewController.h"
-#import "AGMToDoItem.h"
-#import "AGMTableViewCell.h"
+#import "AGMActionItemModel.h"
+
 #import "AGMTableContent.h"
+#import "AGMItemCell.h"
 
 @implementation AGMFirstViewController{
      // Declaro la variable de instancia que contendra los items
      NSMutableArray *_notStartedItemsx;
      AGMTableContent *tableContent;
+     
+     NSString *ident;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -28,6 +31,7 @@
           //Defino el nombre de la solapa y su imagen tmb
          self.title = NSLocalizedString(@"Not Started", @"First");
          self.tabBarItem.image = [UIImage imageNamed:@"first"];
+         self->ident = @"cell1";
          
           //Populo el array de items
           //TODO: esto deberia reemplazarlo con la conexion al JSON2
@@ -52,11 +56,12 @@
      //TODO: Como funciona el "identifier"
      //self->_notStartedItems = [tableContent getNotStarted];
      
-     [self.tableView registerClass:[AGMTableViewCell class] forCellReuseIdentifier:@"cell"];
+     [self.tableView registerClass:[AGMItemCell class] forCellReuseIdentifier:ident];
+     
      
      self.tableView.delegate = self;
      
-     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
      self.tableView.backgroundColor = [UIColor blackColor];
 }
 
@@ -64,14 +69,6 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
--(UIColor*)colorForIndex:(NSInteger) index {
-     
-     NSUInteger itemCount = [tableContent getNotStarted].count - 1;
-     float val = ((float)index / (float)itemCount) * 0.6;
-     return [UIColor colorWithRed: 1.0 green:val blue: 0.0 alpha:1.0];
-     
 }
 
 -(void)toDoItemDeleted:(id)todoItem {
@@ -88,7 +85,7 @@
      bool startAnimating = false;
      
      // iterate over all of the cells
-     for(AGMTableViewCell* cell in visibleCells) {
+     for(AGMItemCell* cell in visibleCells) {
           if (startAnimating) {
                [UIView animateWithDuration:0.3
                                      delay:delay
@@ -103,13 +100,15 @@
                                 }];
                delay+=0.03;
           }
-          
+ /*
           // if you have reached the item that was deleted, start animating
           if (cell.todoItem == todoItem) {
                startAnimating = true;
                cell.hidden = YES;
           }
+  */
      }
+  
 }
 
 -(void) toDoItemReassigned:(id)todoItem{
@@ -125,7 +124,7 @@
      bool startAnimating = false;
      
      // iterate over all of the cells
-     for(AGMTableViewCell* cell in visibleCells) {
+     for(AGMItemCell* cell in visibleCells) {
           if (startAnimating) {
                [UIView animateWithDuration:0.3
                                      delay:delay
@@ -142,10 +141,10 @@
           }
           
           // if you have reached the item that was deleted, start animating
-          if (cell.todoItem == todoItem) {
+         /* if (cell.todoItem == todoItem) {
                startAnimating = true;
                cell.hidden = YES;
-          }
+          }*/
      }
 
 }
@@ -160,17 +159,34 @@
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *ident = @"cell";
+    //NSString *ident = @"cell1";
     // re-use or create a cell
-    AGMTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ident forIndexPath:indexPath];
+    AGMItemCell *cell = [self.tableView dequeueReusableCellWithIdentifier:ident];
+     
+     if (cell == nil) {
+          NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"ItemCell" owner:self options:nil];
+          
+          for (UIView *view in views)
+          {
+               if ([view isKindOfClass:[UITableViewCell class]]) {
+                    cell = (AGMItemCell *)view;
+                    break;
+               }
+          }
+     }
+     
     // find the to-do item for this index
     int index = [indexPath row];
-    AGMToDoItem *item = [tableContent getNotStarted][index];
-    // set the text
-    //cell.textLabel.text = item.text;
+     //EL table content contiene los modelos de datos
+    AGMActionItemModel *item = [tableContent getNotStarted][index];
+
+     //Mando los datos del modelo a la presentacion visual de la celda.
+    cell.storyNameLabel.text = item.text;
      
-     cell.delegate = self;
-     cell.todoItem = item;
+    cell.delegate = self;
+    cell.todoItem = item;
+     
+
      
     return cell;
 }
@@ -181,11 +197,11 @@
 //*********************************************************************************
 //*********************************************************************************
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-     return 50.0f;
+     return 200.0f;
 }
 
--(void)tableView:(UITableView *)tableView willDisplayCell:(AGMTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-     cell.backgroundColor = [UIColor grayColor];
-}
+//-(void)tableView:(UITableView *)tableView willDisplayCell:(AGMItemCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+//     cell.backgroundColor = [UIColor grayColor];
+//}
 
 @end

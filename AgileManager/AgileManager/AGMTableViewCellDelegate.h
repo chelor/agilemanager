@@ -7,13 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "AGMToDoItem.h"
+#import "AGMActionItemModel.h"
 
 @protocol AGMTableViewCellDelegate <NSObject>
 
 // indicates that the given item has been deleted
--(void) toDoItemDeleted:(AGMToDoItem*)todoItem;
+-(void) toDoItemDeleted:(AGMActionItemModel*)todoItem;
 
--(void) toDoItemReassigned:(AGMToDoItem*)todoItem;
+-(void) toDoItemReassigned:(AGMActionItemModel*)todoItem;
 
 @end

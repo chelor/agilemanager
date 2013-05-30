@@ -1,15 +1,17 @@
 //
-//  AGMTableViewCell.m
+//  AGMItemCell.m
 //  AgileManager
 //
-//  Created by Marcelo Russo on 5/10/13.
+//  Created by Marcelo Russo on 5/29/13.
 //  Copyright (c) 2013 Marcelo Russo. All rights reserved.
 //
-#import <QuartzCore/QuartzCore.h>
-#import "AGMTableViewCell.h"
-#import "AGMStrikethroughLabel.h"
 
-@implementation AGMTableViewCell
+#import <QuartzCore/QuartzCore.h>
+#import "AGMItemCell.h"
+
+
+@implementation AGMItemCell
+
 {
      CAGradientLayer* _gradientLayer;
      CGPoint _originalCenter;
@@ -34,60 +36,38 @@ const float UI_CUES_MARGIN = 10.0f;
 const float UI_CUES_WIDTH = 350.0f;
 
 -(id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self) {
-         
-         // add a tick and cross
-         _startLabel = [self createCueLabel];
-         toStart = @"Start \u2192";
-         _startLabel.text = toStart;
-         _startLabel.textAlignment = NSTextAlignmentRight;
-         _startLabel.hidden = YES;
-         [self addSubview:_startLabel];
-         
-         _toBacklogLabel = [self createCueLabel];
-         _toBacklogLabel.text = @"\u2190 to Backlog";
-         _toBacklogLabel.textAlignment = NSTextAlignmentLeft;
-         [self addSubview:_toBacklogLabel];
-         
-         _reassignLabel = [self createCueLabel];
-         reassign = @"Reassign \u265F";
-         _reassignLabel.text = reassign;
-         _reassignLabel.textAlignment = NSTextAlignmentRight;
-         [self addSubview:_reassignLabel];
-         
-         // add a layer that overlays the cell adding a subtle gradient effect
-         // create a label that renders the to-do item text
-         _label = [[AGMStrikethroughLabel alloc] initWithFrame:CGRectNull];
-         _label.textColor = [UIColor whiteColor];
-         _label.font = [UIFont boldSystemFontOfSize:16];
-         _label.backgroundColor = [UIColor clearColor];
-         [self addSubview:_label];
-         
-         // remove the default blue highlight for selected cells
-         //self.selectionStyle = UITableViewCellSelectionStyleNone;
-        _gradientLayer = [CAGradientLayer layer];
-        _gradientLayer.frame = self.bounds;
-        _gradientLayer.colors = @[(id)[[UIColor colorWithWhite:1.0f alpha:0.2f] CGColor],
-                                  (id)[[UIColor colorWithWhite:1.0f alpha:0.1f] CGColor],
-                                  (id)[[UIColor clearColor] CGColor],
-                                  (id)[[UIColor colorWithWhite:0.0f alpha:0.1f] CGColor]];
-        _gradientLayer.locations = @[@0.00f, @0.01f, @0.95f, @1.00f];
-        [self.layer insertSublayer:_gradientLayer atIndex:0];
-         
-         // add a layer that renders a green background when an item is complete
-         _itemCompleteLayer = [CALayer layer];
-         _itemCompleteLayer.backgroundColor = [[[UIColor alloc] initWithRed:0.0 green:0.6 blue:0.0 alpha:1.0] CGColor];
-         _itemCompleteLayer.hidden = YES;
-         [self.layer insertSublayer:_itemCompleteLayer atIndex:0];
-         
-         // add a pan recognizer
-         UIGestureRecognizer* recognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
-         recognizer.delegate = self;
-         
-         [self addGestureRecognizer:recognizer];
-    }
-    return self;
+     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+     if (self) {
+
+          [self addCuesToSubview];
+          
+          /*
+          // remove the default blue highlight for selected cells
+          //self.selectionStyle = UITableViewCellSelectionStyleNone;
+          _gradientLayer = [CAGradientLayer layer];
+          _gradientLayer.frame = self.bounds;
+          _gradientLayer.colors = @[(id)[[UIColor colorWithWhite:1.0f alpha:0.2f] CGColor],
+                                    (id)[[UIColor colorWithWhite:1.0f alpha:0.1f] CGColor],
+                                    (id)[[UIColor clearColor] CGColor],
+                                    (id)[[UIColor colorWithWhite:0.0f alpha:0.1f] CGColor]];
+          _gradientLayer.locations = @[@0.00f, @0.01f, @0.95f, @1.00f];
+          [self.layer insertSublayer:_gradientLayer atIndex:0];
+          
+          // add a layer that renders a green background when an item is complete
+          
+          _itemCompleteLayer = [CALayer layer];
+          _itemCompleteLayer.backgroundColor = [[[UIColor alloc] initWithRed:0.0 green:0.6 blue:0.0 alpha:1.0] CGColor];
+          _itemCompleteLayer.hidden = YES;
+          [self.layer insertSublayer:_itemCompleteLayer atIndex:0];
+          */
+          // add a pan recognizer
+          UIGestureRecognizer* recognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
+          
+          recognizer.delegate = self;
+          
+          [self addGestureRecognizer:recognizer];
+     }
+     return self;
 }
 
 -(void)layoutSubviews {
@@ -95,23 +75,46 @@ const float UI_CUES_WIDTH = 350.0f;
      // ensure the gradient layers occupies the full bounds
      _gradientLayer.frame = self.bounds;
      _itemCompleteLayer.frame = self.bounds;
-     _label.frame = CGRectMake(LABEL_LEFT_MARGIN, 0,
-                               self.bounds.size.width - LABEL_LEFT_MARGIN,self.bounds.size.height);
+//     _label.frame = CGRectMake(LABEL_LEFT_MARGIN, 0,
+//                               self.bounds.size.width - LABEL_LEFT_MARGIN,self.bounds.size.height);
      _startLabel.frame = CGRectMake(-UI_CUES_WIDTH - UI_CUES_MARGIN, 0,
-                                   UI_CUES_WIDTH, self.bounds.size.height);
-     _toBacklogLabel.frame = CGRectMake(self.bounds.size.width + UI_CUES_MARGIN, 0,
                                     UI_CUES_WIDTH, self.bounds.size.height);
+     _toBacklogLabel.frame = CGRectMake(self.bounds.size.width + UI_CUES_MARGIN, 0,
+                                        UI_CUES_WIDTH, self.bounds.size.height);
      
      _reassignLabel.frame = CGRectMake(-UI_CUES_WIDTH - UI_CUES_MARGIN, 0,
                                        UI_CUES_WIDTH, self.bounds.size.height);
 }
 
--(void)setTodoItem:(AGMToDoItem *)todoItem {
+-(void)setTodoItem:(AGMActionItemModel *)todoItem {
      _todoItem = todoItem;
      // we must update all the visual state associated with the model item
-     _label.text = todoItem.text;
-     _label.strikethrough = todoItem.completed;
-     _itemCompleteLayer.hidden = !todoItem.completed;
+//     _label.text = todoItem.text;
+//     _label.strikethrough = todoItem.completed;
+//     _itemCompleteLayer.hidden = !todoItem.completed;
+}
+
+-(void)addCuesToSubview
+{
+     // add a tick and cross
+     _startLabel = [self createCueLabel];
+     toStart = @"Start \u2192";
+     _startLabel.text = toStart;
+     _startLabel.textAlignment = NSTextAlignmentRight;
+     _startLabel.hidden = YES;
+     [self addSubview:_startLabel];
+     
+     _toBacklogLabel = [self createCueLabel];
+     _toBacklogLabel.text = @"\u2190 to Backlog";
+     _toBacklogLabel.textAlignment = NSTextAlignmentLeft;
+     [self addSubview:_toBacklogLabel];
+     
+     _reassignLabel = [self createCueLabel];
+     reassign = @"Reassign \u265F";
+     _reassignLabel.text = reassign;
+     _reassignLabel.textAlignment = NSTextAlignmentRight;
+     [self addSubview:_reassignLabel];
+
 }
 
 // utility method for creating the contextual cues
@@ -193,7 +196,7 @@ const float UI_CUES_WIDTH = 350.0f;
                // mark the item as complete and update the UI state
                self.todoItem.completed = YES;
                _itemCompleteLayer.hidden = NO;
-               _label.strikethrough = YES;
+//               _label.strikethrough = YES;
           }
           
           if (_markReassingment){
@@ -202,9 +205,9 @@ const float UI_CUES_WIDTH = 350.0f;
           }
           self.center = _originalCenter;
      }
-
-
-
+     
+     
+     
 }
 
 @end

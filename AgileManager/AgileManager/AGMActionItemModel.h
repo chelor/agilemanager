@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface AGMToDoItem : NSObject
+@interface AGMActionItemModel: NSObject
 
 // A text description of this item.
 @property (nonatomic, copy) NSString *text;

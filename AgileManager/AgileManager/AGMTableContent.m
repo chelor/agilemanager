@@ -7,7 +7,7 @@
 //
 
 #import "AGMTableContent.h"
-#import "AGMToDoItem.h"
+#import "AGMActionItemModel.h"
 
 @implementation AGMTableContent
 {
@@ -74,7 +74,7 @@ static AGMTableContent* _sharedMySingleton = nil;
      int i;
 
      for (i=0; i<[arr count]; i++) {
-          [self.notStartedList addObject:[AGMToDoItem toDoItemWithText:[arr objectAtIndex:i]]];
+          [self.notStartedList addObject:[AGMActionItemModel toDoItemWithText:[arr objectAtIndex:i]]];
      }
 
 }
@@ -84,7 +84,7 @@ static AGMTableContent* _sharedMySingleton = nil;
      int i;
      
      for (i=0; i<[arr count]; i++) {
-          [self.backlogList addObject:[AGMToDoItem toDoItemWithText:[arr objectAtIndex:i]]];
+          [self.backlogList addObject:[AGMActionItemModel toDoItemWithText:[arr objectAtIndex:i]]];
      }
      
 }

@@ -12,22 +12,26 @@
 
 #import "AGMSecondViewController.h"
 
+#import "AGMThirdViewController.h"
+
 @implementation AGMAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
-    UIViewController *viewController1, *viewController2;
+    UIViewController *viewController1, *viewController2, *viewController3;
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         viewController1 = [[AGMFirstViewController alloc] initWithNibName:@"AGMFirstViewController_iPhone" bundle:nil];
         viewController2 = [[AGMSecondViewController alloc] initWithNibName:@"AGMSecondViewController_iPhone" bundle:nil];
+        viewController3 = [[AGMThirdViewController alloc] initWithNibName:@"AGMThirdViewController_iPhone" bundle:nil];
     } else {
         viewController1 = [[AGMFirstViewController alloc] initWithNibName:@"AGMFirstViewController_iPad" bundle:nil];
         viewController2 = [[AGMSecondViewController alloc] initWithNibName:@"AGMSecondViewController_iPad" bundle:nil];
+        //viewController3 = [[AGMThirdViewController alloc] initWithNibName:@"AGMThirdViewController_iPad" bundle:nil];
     }
     self.tabBarController = [[UITabBarController alloc] init];
-    self.tabBarController.viewControllers = @[viewController1, viewController2];
+    self.tabBarController.viewControllers = @[viewController1, viewController2, viewController3];
     self.window.rootViewController = self.tabBarController;
     [self.window makeKeyAndVisible];
     return YES;

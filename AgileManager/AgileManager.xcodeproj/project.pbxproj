@@ -7,7 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9C30160D174737F000D931A0 /* ItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9C30160C174737F000D931A0 /* ItemCell.xib */; };
 		9C598490173EEF0F0012245C /* AGMTableContent.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C59848F173EEF0F0012245C /* AGMTableContent.m */; };
+		9CB67BE71742C8A500BC74FF /* AGMThirdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CB67BE61742C8A400BC74FF /* AGMThirdViewController.m */; };
+		9CB67BE91742C9BE00BC74FF /* AGMThirdViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9CB67BE81742C9BD00BC74FF /* AGMThirdViewController_iPhone.xib */; };
 		9CBBD313173D62A600B5AA3B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CBBD312173D62A600B5AA3B /* UIKit.framework */; };
 		9CBBD315173D62A600B5AA3B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CBBD314173D62A600B5AA3B /* Foundation.framework */; };
 		9CBBD317173D62A600B5AA3B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CBBD316173D62A600B5AA3B /* CoreGraphics.framework */; };
@@ -27,15 +30,19 @@
 		9CBBD33D173D62A700B5AA3B /* AGMFirstViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9CBBD33B173D62A700B5AA3B /* AGMFirstViewController_iPad.xib */; };
 		9CBBD340173D62A700B5AA3B /* AGMSecondViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9CBBD33E173D62A700B5AA3B /* AGMSecondViewController_iPhone.xib */; };
 		9CBBD343173D62A700B5AA3B /* AGMSecondViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9CBBD341173D62A700B5AA3B /* AGMSecondViewController_iPad.xib */; };
-		9CBBD34C173D63D400B5AA3B /* AGMToDoItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CBBD34B173D63D400B5AA3B /* AGMToDoItem.m */; };
-		9CBBD34F173D79D700B5AA3B /* AGMTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CBBD34E173D79D700B5AA3B /* AGMTableViewCell.m */; };
+		9CBBD34C173D63D400B5AA3B /* AGMActionItemModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CBBD34B173D63D400B5AA3B /* AGMActionItemModel.m */; };
 		9CBBD351173D7B1C00B5AA3B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CBBD350173D7B1C00B5AA3B /* QuartzCore.framework */; };
 		9CBBD355173D845F00B5AA3B /* AGMStrikethroughLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CBBD354173D845F00B5AA3B /* AGMStrikethroughLabel.m */; };
+		9CF6FD001756393400D5989B /* AGMItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CF6FCFF1756393400D5989B /* AGMItemCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9C30160C174737F000D931A0 /* ItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ItemCell.xib; sourceTree = "<group>"; };
 		9C59848E173EEF0F0012245C /* AGMTableContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AGMTableContent.h; sourceTree = "<group>"; };
 		9C59848F173EEF0F0012245C /* AGMTableContent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AGMTableContent.m; sourceTree = "<group>"; };
+		9CB67BE51742C8A300BC74FF /* AGMThirdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AGMThirdViewController.h; sourceTree = "<group>"; };
+		9CB67BE61742C8A400BC74FF /* AGMThirdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AGMThirdViewController.m; sourceTree = "<group>"; };
+		9CB67BE81742C9BD00BC74FF /* AGMThirdViewController_iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AGMThirdViewController_iPhone.xib; sourceTree = "<group>"; };
 		9CBBD30F173D62A600B5AA3B /* AgileManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AgileManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CBBD312173D62A600B5AA3B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		9CBBD314173D62A600B5AA3B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -61,14 +68,14 @@
 		9CBBD33C173D62A700B5AA3B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/AGMFirstViewController_iPad.xib; sourceTree = "<group>"; };
 		9CBBD33F173D62A700B5AA3B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/AGMSecondViewController_iPhone.xib; sourceTree = "<group>"; };
 		9CBBD342173D62A700B5AA3B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/AGMSecondViewController_iPad.xib; sourceTree = "<group>"; };
-		9CBBD34A173D63D400B5AA3B /* AGMToDoItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AGMToDoItem.h; sourceTree = "<group>"; };
-		9CBBD34B173D63D400B5AA3B /* AGMToDoItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AGMToDoItem.m; sourceTree = "<group>"; };
-		9CBBD34D173D79D700B5AA3B /* AGMTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AGMTableViewCell.h; sourceTree = "<group>"; };
-		9CBBD34E173D79D700B5AA3B /* AGMTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AGMTableViewCell.m; sourceTree = "<group>"; };
+		9CBBD34A173D63D400B5AA3B /* AGMActionItemModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AGMActionItemModel.h; sourceTree = "<group>"; };
+		9CBBD34B173D63D400B5AA3B /* AGMActionItemModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AGMActionItemModel.m; sourceTree = "<group>"; };
 		9CBBD350173D7B1C00B5AA3B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		9CBBD352173D818F00B5AA3B /* AGMTableViewCellDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AGMTableViewCellDelegate.h; sourceTree = "<group>"; };
 		9CBBD353173D845F00B5AA3B /* AGMStrikethroughLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AGMStrikethroughLabel.h; sourceTree = "<group>"; };
 		9CBBD354173D845F00B5AA3B /* AGMStrikethroughLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AGMStrikethroughLabel.m; sourceTree = "<group>"; };
+		9CF6FCFE1756393400D5989B /* AGMItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AGMItemCell.h; sourceTree = "<group>"; };
+		9CF6FCFF1756393400D5989B /* AGMItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AGMItemCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +125,9 @@
 		9CBBD318173D62A600B5AA3B /* AgileManager */ = {
 			isa = PBXGroup;
 			children = (
+				9CF6FD05175692A300D5989B /* PANTALLA 3 */,
+				9CF6FD041756914900D5989B /* TABLA */,
+				9CF6FD03175690CF00D5989B /* PANTALLA 2 */,
 				9CBBD349173D63AD00B5AA3B /* Classes */,
 				9CBBD321173D62A600B5AA3B /* AGMAppDelegate.h */,
 				9CBBD322173D62A600B5AA3B /* AGMAppDelegate.m */,
@@ -125,14 +135,10 @@
 				9CBBD32B173D62A600B5AA3B /* AGMFirstViewController.m */,
 				9CBBD32D173D62A600B5AA3B /* first.png */,
 				9CBBD32F173D62A600B5AA3B /* first@2x.png */,
-				9CBBD331173D62A600B5AA3B /* AGMSecondViewController.h */,
-				9CBBD332173D62A600B5AA3B /* AGMSecondViewController.m */,
 				9CBBD334173D62A600B5AA3B /* second.png */,
 				9CBBD336173D62A600B5AA3B /* second@2x.png */,
 				9CBBD338173D62A600B5AA3B /* AGMFirstViewController_iPhone.xib */,
 				9CBBD33B173D62A700B5AA3B /* AGMFirstViewController_iPad.xib */,
-				9CBBD33E173D62A700B5AA3B /* AGMSecondViewController_iPhone.xib */,
-				9CBBD341173D62A700B5AA3B /* AGMSecondViewController_iPad.xib */,
 				9CBBD319173D62A600B5AA3B /* Supporting Files */,
 			);
 			path = AgileManager;
@@ -155,17 +161,54 @@
 		9CBBD349173D63AD00B5AA3B /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				9CBBD34D173D79D700B5AA3B /* AGMTableViewCell.h */,
-				9CBBD34E173D79D700B5AA3B /* AGMTableViewCell.m */,
-				9CBBD34A173D63D400B5AA3B /* AGMToDoItem.h */,
-				9CBBD34B173D63D400B5AA3B /* AGMToDoItem.m */,
-				9CBBD352173D818F00B5AA3B /* AGMTableViewCellDelegate.h */,
 				9CBBD353173D845F00B5AA3B /* AGMStrikethroughLabel.h */,
 				9CBBD354173D845F00B5AA3B /* AGMStrikethroughLabel.m */,
-				9C59848E173EEF0F0012245C /* AGMTableContent.h */,
-				9C59848F173EEF0F0012245C /* AGMTableContent.m */,
 			);
 			name = Classes;
+			sourceTree = "<group>";
+		};
+		9CF6FD03175690CF00D5989B /* PANTALLA 2 */ = {
+			isa = PBXGroup;
+			children = (
+				9CBBD33E173D62A700B5AA3B /* AGMSecondViewController_iPhone.xib */,
+				9CBBD341173D62A700B5AA3B /* AGMSecondViewController_iPad.xib */,
+				9CBBD331173D62A600B5AA3B /* AGMSecondViewController.h */,
+				9CBBD332173D62A600B5AA3B /* AGMSecondViewController.m */,
+			);
+			name = "PANTALLA 2";
+			sourceTree = "<group>";
+		};
+		9CF6FD041756914900D5989B /* TABLA */ = {
+			isa = PBXGroup;
+			children = (
+				9CF6FD06175692DC00D5989B /* CELDA */,
+				9C59848E173EEF0F0012245C /* AGMTableContent.h */,
+				9C59848F173EEF0F0012245C /* AGMTableContent.m */,
+				9CBBD352173D818F00B5AA3B /* AGMTableViewCellDelegate.h */,
+			);
+			name = TABLA;
+			sourceTree = "<group>";
+		};
+		9CF6FD05175692A300D5989B /* PANTALLA 3 */ = {
+			isa = PBXGroup;
+			children = (
+				9CB67BE51742C8A300BC74FF /* AGMThirdViewController.h */,
+				9CB67BE61742C8A400BC74FF /* AGMThirdViewController.m */,
+				9CB67BE81742C9BD00BC74FF /* AGMThirdViewController_iPhone.xib */,
+			);
+			name = "PANTALLA 3";
+			sourceTree = "<group>";
+		};
+		9CF6FD06175692DC00D5989B /* CELDA */ = {
+			isa = PBXGroup;
+			children = (
+				9C30160C174737F000D931A0 /* ItemCell.xib */,
+				9CF6FCFE1756393400D5989B /* AGMItemCell.h */,
+				9CF6FCFF1756393400D5989B /* AGMItemCell.m */,
+				9CBBD34A173D63D400B5AA3B /* AGMActionItemModel.h */,
+				9CBBD34B173D63D400B5AA3B /* AGMActionItemModel.m */,
+			);
+			name = CELDA;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -233,6 +276,8 @@
 				9CBBD33D173D62A700B5AA3B /* AGMFirstViewController_iPad.xib in Resources */,
 				9CBBD340173D62A700B5AA3B /* AGMSecondViewController_iPhone.xib in Resources */,
 				9CBBD343173D62A700B5AA3B /* AGMSecondViewController_iPad.xib in Resources */,
+				9CB67BE91742C9BE00BC74FF /* AGMThirdViewController_iPhone.xib in Resources */,
+				9C30160D174737F000D931A0 /* ItemCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -263,10 +308,11 @@
 				9CBBD323173D62A600B5AA3B /* AGMAppDelegate.m in Sources */,
 				9CBBD32C173D62A600B5AA3B /* AGMFirstViewController.m in Sources */,
 				9CBBD333173D62A600B5AA3B /* AGMSecondViewController.m in Sources */,
-				9CBBD34C173D63D400B5AA3B /* AGMToDoItem.m in Sources */,
-				9CBBD34F173D79D700B5AA3B /* AGMTableViewCell.m in Sources */,
+				9CBBD34C173D63D400B5AA3B /* AGMActionItemModel.m in Sources */,
 				9CBBD355173D845F00B5AA3B /* AGMStrikethroughLabel.m in Sources */,
 				9C598490173EEF0F0012245C /* AGMTableContent.m in Sources */,
+				9CB67BE71742C8A500BC74FF /* AGMThirdViewController.m in Sources */,
+				9CF6FD001756393400D5989B /* AGMItemCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
